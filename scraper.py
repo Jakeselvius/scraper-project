@@ -88,3 +88,7 @@ for page_number in range(1, 6):
     time.sleep(0.5) # so we dont overload the website
 
 print(f"Total books collected: {len(all_books)}")
+for book in all_books:
+    print("================================================================\n")
+    print(f"Title: {book["title"]} | Price: {book["price"]} | Rating: {book['rating']}\n")
+print("================================================================\n")

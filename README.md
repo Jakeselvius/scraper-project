@@ -12,3 +12,5 @@ This program:
 - Generates data visualizations using Pandas and Matplotlib
 
 - Organized into clean, modular Python files
+
+Feel free to take a peek. Any feedback is welcomed, I'm always trying to get better. 

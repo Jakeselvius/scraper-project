@@ -1,5 +1,6 @@
 import requests
 from bs4 import BeautifulSoup
+import time
 
 # LOOKIN AT THE GENERAL HTML STRUCTURE
 # 'url' assigns the website we are looking at
@@ -42,7 +43,7 @@ def clean_price(price_text):
 
 def clean_rating(rating_word):
     rating_map = {"One": 1, "Two": 2, "Three": 3, "Four": 4, "Five": 5}
-    return rating_map.get(rating_word, 0)
+    return rating_map.get(rating_word)
 
 """========================================================================"""
 
@@ -55,7 +56,38 @@ for book in books:
     title = book.h3.a['title']
     price_text = book.find('p', class_='price_color').text
     rating_word = book.find('p', class_='star-rating')['class'][1]
-    print(f'{title} | {clean_price(price_text)} | {clean_rating(rating_word)}')
+    print(f'{title} | {clean_price(price_text)} | {clean_rating(rating_word)} |')
    
 """========================================================================"""
 
+
+# FUNCTION TO SCRAPE A PAGE. ALLOWS US TO SCRAPE MULTIPLE PAGES
+def scrape_page(url):
+    response = requests.get(url)
+    soup = BeautifulSoup(response.text, "html.parser")
+    book_elements = soup.find_all("article", class_="product_pod")
+
+    books = []
+    for book in book_elements:
+        title = book.h3.a['title']
+        price_text = book.find('p', class_='price_color').text
+        rating_word = book.find('p', class_='star-rating')['class'][1]
+        price = clean_price(price_text)
+        rating = clean_rating(rating_word)
+        books.append({'title': title, 'price': price, 'rating': rating})
+    return books
+
+
+all_books = []
+for page_number in range(1, 51):
+    if page_number == 1:
+        url = "https://books.toscrape.com"
+    else:
+        url = f"https://books.toscrape.com/catalogue/page-{page_number}.html"
+
+    print(f"Scraping page {page_number}...")
+    books_on_page = scrape_page(url)
+    all_books.extend(books_on_page)
+    time.sleep(0.5) # so we dont overload the website
+
+print(f"Total books collected: {len(all_books)}")

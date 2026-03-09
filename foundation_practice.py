@@ -58,10 +58,12 @@ for book in books:
 
 print("\n=====================================================")
 # Find the chepest book
-cheapest = min(books, key=lambda b: b["price"]) # lamda: referene to books, look at price
+cheapest = min(books, key=lambda b: b["price"]) # lamda: referenes books, look at price
 total = sum(price["price"] for price in books)
 average = total / len(books)
 
 print(f"\nCheapest: {cheapest['title']} - ${cheapest['price']:.2f}")
 print(f"Average Price: ${average:.2f}\n")
 print("=====================================================")
+
+

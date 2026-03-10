@@ -1,8 +1,8 @@
 import sqlite3
 
 # creates my 'books' database if it doesnt exist
-conn = sqlite3.connect('books.db')
-cursor = conn.cursor()
+connection = sqlite3.connect('books.db')
+cursor = connection.cursor()
 
 # creates the books table and makes sure it doesnt already exist
 cursor.execute("""
@@ -13,14 +13,14 @@ cursor.execute("""
                rating INTEGER NOT NULL
                )
                """)
-conn.commit()
-conn.close()
+connection.commit()
+connection.close()
 print("Database created!")
 
 
 def save_books_to_db(books):
-    conn = sqlite3.connect("books.db")
-    cursor = conn.cursor()
+    connection = sqlite3.connect("books.db")
+    cursor = connection.cursor()
 
     cursor.execute("DELETE FROM books") # clears old data so when I re-run i wont get duplicates
 
@@ -29,7 +29,7 @@ def save_books_to_db(books):
                        INSERT INTO books (title, price, rating)
                        VALUES (?,?,?)
                     """, (book["title"], book["price"], book["rating"]))
-    conn.commit()
-    conn.close()
+    connection.commit()
+    connection.close()
     print(f"Saved {len(books)} books to the database")
         

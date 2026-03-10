@@ -23,4 +23,15 @@ stores it in an SQLite3 database, and performs data analysis with Pandas.
    python main.py
 
 
+## Visualisations
+
+Average book price by rating:
+
+![Average price by rating](Bar_chart_price_by_rating.png)
+
+Price distribution histogram:
+
+![Price distribution](Histogram_chart_showing_price_distribution.png)
+
+
 Feel free to take a peek. Any feedback is welcomed, I'm always trying to improve. 

@@ -1,5 +1,6 @@
 import requests
 from bs4 import BeautifulSoup
+from database import save_books_to_db
 import time
 
 # LOOKIN AT THE GENERAL HTML STRUCTURE
@@ -87,8 +88,12 @@ for page_number in range(1, 6):
     all_books.extend(books_on_page)
     time.sleep(0.5) # so we dont overload the website
 
-print(f"Total books collected: {len(all_books)}")
+
+save_books_to_db(all_books)
+"""print(f"Total books collected: {len(all_books)}")
 for book in all_books:
     print("================================================================\n")
     print(f"Title: {book["title"]} | Price: {book["price"]} | Rating: {book['rating']}\n")
-print("================================================================\n")
+print("================================================================\n")"""
+
+

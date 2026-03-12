@@ -1,6 +1,6 @@
-# import sqlite3
-# import pandas as pd
-# import matplotlib.pyplot as plt
+import sqlite3
+import pandas as pd
+import matplotlib.pyplot as plt
 
 # # load our book database into the pandas dataframe
 # connection = sqlite3.connect("books.db")
@@ -99,3 +99,20 @@
 # plt.savefig("Histogram_chart_showing_price_distribution.png", dpi=150)
 # plt.show()
 # print("Histogram_chart_showing_price_distribution.png")
+
+connection = sqlite3.connect('books.db')
+command = connection.cursor()
+data = pd.read_sql_query("""SELECT b.book_id, b.title, b.price, b.rating, g.genre
+                         FROM books b
+                         JOIN genres g
+                         on b.genre_id = g.genre_id
+                         """, connection)
+connection.close()
+print(data["genre"].value_counts())
+
+# print(data.head())
+# print(data.shape)
+# print(data.describe())
+# print(data.dtypes)
+# data.plot(kind = 'scatter', x = 'rating', y = 'genre')
+# plt.show()

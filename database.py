@@ -13,6 +13,8 @@ command.execute(""" CREATE TABLE IF NOT EXISTS books (
                 title TEXT,
                 price REAL,
                 rating INTEGER,
+                genre_id INTEGER,
+                FOREIGN KEY (genre_id) REFERENCES genres(genre_id),
                 CHECK (price >= 0)
                 )
                 """)
@@ -20,47 +22,66 @@ command.execute(""" CREATE TABLE IF NOT EXISTS books (
 print("books table has been created!\n")
 command.execute(""" CREATE TABLE IF NOT EXISTS genres
                 (
-                book_id INTEGER PRIMARY KEY AUTOINCREMENT,
+                genre_id INTEGER PRIMARY KEY AUTOINCREMENT,
                 genre TEXT
                 )
                 """)
 print("genre tabel has been created!\n")
 
 
-# instert book data into our books table
-def add_books_to_table(all_books):
-    connection = sqlite3.connect('books.db')
-    command = connection.cursor()
-
-    command.execute(""" DELETE FROM books """) #delete any existing data so we can re-run the progeram
-    command.execute("DELETE FROM sqlite_sequence WHERE name='books'")
-    
-    for book in all_books:
-        command.execute(""" INSERT INTO books 
-                        (title, price, rating)
-                        VALUES (?,?,?)
-                        """, (book['title'], book['price'], book['rating']))
-    connection.commit()
-    connection.close()
-    print(f"Added {len(all_books)} books to the 'books' table")
-
+# instert genre data into our genres table within the book database
 def add_genres_to_table(all_genres):
     connection = sqlite3.connect('books.db')
     command = connection.cursor()
 
-    command.execute("""DELETE FROM genres""")
-    command.execute("DELETE FROM sqlite_sequence WHERE name='genres'") # resets the autoincrement id back to 1 
-    for genre in all_genres:
-        command.execute(""" INSERT INTO genres
-                        (genre)
-                        VALUES (?) 
-                        """, (genre['genre'],))
+    unique_genres = set(all_genres)
+
+    command.execute("DELETE FROM genres") # so we can run this multiple times and not overlap data
+    command.execute("DELETE FROM sqlite_sequence WHERE name='genres'") # resets the auto counter back to 1
+
+    for genre in unique_genres:
+        command.execute("""
+            INSERT INTO genres (genre)
+            VALUES (?)
+        """, (genre,))
+
     connection.commit()
     connection.close()
-    print(f"Added {len(all_genres)} to the genres table")
 
-# for row in command.execute("""SELECT * FROM genres"""):
-#     print(row)
+    print(f"Added {len(unique_genres)} genres to the genres table")
 
-# connection.commit()
-# connection.close()
+# instert book data into our books table within the book database
+def add_books_to_table(all_books):
+    connection = sqlite3.connect('books.db')
+    command = connection.cursor()
+
+    command.execute("DELETE FROM books")
+    command.execute("DELETE FROM sqlite_sequence WHERE name='books'") # resets the auto counter back to 1
+
+    for book in all_books:
+        command.execute("""
+            SELECT genre_id
+            FROM genres
+            WHERE genre = ?
+        """, (book['genre'],))
+
+        genre_id = command.fetchone()[0]
+
+        command.execute("""
+            INSERT INTO books (title, price, rating, genre_id)
+            VALUES (?, ?, ?, ?)
+        """, (book['title'], book['price'], book['rating'], genre_id))
+
+    connection.commit()
+    connection.close()
+
+    print(f"Added {len(all_books)} books to the books table")
+
+# for row in command.execute("""SELECT * FROM books b
+#                            JOIN genres g
+#                            on b.genre_id = g.genre_id
+#                            WHERE g.genre_id = 1"""):
+#     print(f"Genre ID: {row[0]} || Title: {row[1]}")
+
+connection.commit()
+connection.close()

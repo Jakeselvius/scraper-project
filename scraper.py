@@ -95,6 +95,6 @@ def scrape_page(total_pages):
     else:
         return      
 
-scrape_page(1)
+
 
 

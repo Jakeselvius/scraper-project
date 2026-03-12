@@ -102,13 +102,13 @@ import matplotlib.pyplot as plt
 
 connection = sqlite3.connect('books.db')
 command = connection.cursor()
-data = pd.read_sql_query("""SELECT b.book_id, b.title, b.price, b.rating, g.genre
+book_data = pd.read_sql_query("""SELECT b.book_id, b.title, b.price, b.rating, g.genre
                          FROM books b
                          JOIN genres g
                          on b.genre_id = g.genre_id
                          """, connection)
 connection.close()
-print(data["genre"].value_counts())
+print(book_data["genre"].value_counts())
 
 # print(data.head())
 # print(data.shape)

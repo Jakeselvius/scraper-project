@@ -23,7 +23,7 @@ stores it in an SQLite3 database, and performs data analysis with Pandas.
    python main.py
 
 
-## Visualisations
+## Visualizations
 
 Average book price by rating:
 

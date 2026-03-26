@@ -82,8 +82,3 @@ def average_rating_per_genre():
         print(f"[Genre - {book[0]} | Average rating - {book[1]:.2f}]\n{'-'*60}")
     connection.close()
 
-books_per_genre()
-avg_price_per_genre()
-max_price_per_genre()
-min_price_per_genre()
-average_rating_per_genre()

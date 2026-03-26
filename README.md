@@ -33,5 +33,7 @@ Price distribution histogram:
 
 ![Price distribution](Histogram_chart_showing_price_distribution.png)
 
+![Number of star ratings per genre](Scatter_plot_showing_rating_by_genre.png)
+
 
 Feel free to take a peek. Any feedback is welcomed, I'm always trying to improve. 

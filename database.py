@@ -6,8 +6,8 @@ if none exist, the name inputted will be cerated as one"""
 connection = sqlite3.connect('books.db') # connects to existing db, creates one of none exist
 command = connection.cursor() # this allows us to run a command like CREATE TABLE, INSERT, UPDATE etc...
 
-"""Now lets create 2 tables, 1 for book data containing book_id, title, price, rating
-and a 2nd table that holds book_id, genre, total_per_genre"""
+"""Now lets create 2 tables, 1 for book data containing book_id, title, price, rating, genre_id
+and a 2nd table that holds genre_id and genre"""
 command.execute(""" CREATE TABLE IF NOT EXISTS books (
                 book_id INTEGER PRIMARY KEY AUTOINCREMENT,
                 title TEXT,
@@ -34,7 +34,7 @@ def add_genres_to_table(all_genres):
     connection = sqlite3.connect('books.db')
     command = connection.cursor()
 
-    unique_genres = set(all_genres)
+    unique_genres = set(all_genres) # make it a set to get rid of duplicate genres
 
     command.execute("DELETE FROM genres") # so we can run this multiple times and not overlap data
     command.execute("DELETE FROM sqlite_sequence WHERE name='genres'") # resets the auto counter back to 1
@@ -85,3 +85,4 @@ def add_books_to_table(all_books):
 
 connection.commit()
 connection.close()
+

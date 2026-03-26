@@ -25,15 +25,20 @@ stores it in an SQLite3 database, and performs data analysis with Pandas.
 
 ## Visualizations
 
-Average book price by rating:
+Average book price by star-rating out of 5:
 
-![Average price by rating](Bar_chart_price_by_rating.png)
+![Average price by star-rating](Bar_chart_price_by_rating.png)
 
 Price distribution histogram:
 
 ![Price distribution](Histogram_chart_showing_price_distribution.png)
 
-![Number of star ratings per genre](Scatter_plot_showing_rating_by_genre.png)
+
+Number of star-ratings star-rating out of 5 per genre
+
+![Number of star-ratings per genre](Scatter_plot_showing_rating_by_genre.png)
 
 
-Feel free to take a peek. Any feedback is welcomed, I'm always trying to improve. 
+Any and all feedback is welcomed. Im always trying to find areas where I can improve and feedback (good or bad) is a HUGE part of that. Feel free to send me an email at jakeselvius@gmail.com with questions, comments or feeback!
+ 
+(please make sure to add a subject related to this project in the email)

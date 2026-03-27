@@ -59,6 +59,7 @@ def add_books_to_table(all_books):
     command.execute("DELETE FROM sqlite_sequence WHERE name='books'") # resets the auto counter back to 1
 
     for book in all_books:
+        # select the matching genre_id from the genres table
         command.execute("""
             SELECT genre_id
             FROM genres

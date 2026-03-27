@@ -66,7 +66,7 @@ def add_books_to_table(all_books):
             WHERE genre = ?
         """, (book['genre'],))
 
-        genre_id = command.fetchone()[0]
+        genre_id = command.fetchone()[0] # gets the data of the first row whichis the genre_id of the book were looking at
 
         command.execute("""
             INSERT INTO books (title, price, rating, genre_id)
